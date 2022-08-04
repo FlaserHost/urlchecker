@@ -1,35 +1,17 @@
 <?php
-
 use yii\db\Migration;
 
-/**
- * Class m220804_170541_add_urltable
- */
 class m220804_170541_add_urltable extends Migration
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function safeUp()
-    {
-
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function safeDown()
-    {
-        echo "m220804_170541_add_urltable cannot be reverted.\n";
-
-        return false;
-    }
-
-    /*
-    // Use up()/down() to run migration code without a transaction.
     public function up()
     {
-
+        $this->createTable('urltable', [
+            'url_id' => $this->primaryKey(),
+            'creation_date' => $this->date(),
+            'url' => $this->string(255)->notNull(),
+            'frequency' => $this->integer()->notNull(),
+            'repeat_count' => $this->integer()->notNull()
+        ]);
     }
 
     public function down()
@@ -38,5 +20,4 @@ class m220804_170541_add_urltable extends Migration
 
         return false;
     }
-    */
 }
