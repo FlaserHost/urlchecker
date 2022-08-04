@@ -5,7 +5,7 @@ class m220804_170541_add_urltable extends Migration
 {
     public function up()
     {
-        $this->createTable('urltable', [
+        $this->createTable('{{%urltable}}', [
             'url_id' => $this->primaryKey(),
             'creation_date' => $this->date(),
             'url' => $this->string(255)->notNull(),
@@ -16,8 +16,6 @@ class m220804_170541_add_urltable extends Migration
 
     public function down()
     {
-        echo "m220804_170541_add_urltable cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%urltable}}');
     }
 }

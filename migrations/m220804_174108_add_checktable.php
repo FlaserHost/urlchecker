@@ -5,19 +5,34 @@ class m220804_174108_add_checktable extends Migration
 {
     public function up()
     {
-        $this->createTable('checktable', [
+        $this->createTable('{{%checktable}}', [
             'check_id' => $this->primaryKey(),
-            'check_date' => $this->date(),
+            'check_date' => $this->date()->notNull(),
             'url' => $this->string(255)->notNull(),
-            'http' => $this->string(255)->notNull(),
+            'url_id' => $this->integer()->notNull(),
+            'http' => $this->integer()->notNull(),
             'attempt' => $this->integer()->notNull()
         ]);
+
+        $this->createIndex(
+            'FK_url_id',
+            '{{%checktable}}',
+            'url_id'
+        );
+
+        $this->addForeignKey(
+            'FK_url_id',
+            '{{%checktable}}',
+            'url_id',
+            '{{%urltable}}',
+            'url_id',
+            'NO ACTION',
+            'CASCADE'
+        );
     }
 
     public function down()
     {
-        echo "m220804_174108_add_checktable cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('{{%checktable}}');
     }
 }
