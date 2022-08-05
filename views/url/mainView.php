@@ -6,7 +6,7 @@
 ?>
 <div class="content">
     <?php $inputForm = ActiveForm::begin([
-            'id' => 'urlForm',
+            'id' => 'urlForm'
     ]) ?>
     <div class="fieldSet">
         <?= $inputForm->field($urlForm, 'url')->textInput(['name' => 'url', 'placeholder' => 'Введите URL для проверки']) ?>
@@ -16,6 +16,7 @@
     </div>
     <?php ActiveForm::end() ?>
 </div>
+<div class="test"></div>
 <?php
     // Отключение стандартного тулбара от Yii2
     if(class_exists('yii\debug\Module'))

@@ -10,13 +10,6 @@ class UrlForm extends Model
     public $frequency;
     public $repeat_count;
 
-    public function rules()
-    {
-        return [
-            [['url', 'frequency', 'repeat_count'], 'required'],
-        ];
-    }
-
     public function attributeLabels()
     {
         return [

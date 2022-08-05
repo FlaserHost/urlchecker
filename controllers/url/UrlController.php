@@ -20,30 +20,34 @@ class UrlController extends Controller
     public function actionCheck()
     {
         $request = \Yii::$app->request;
-        if($request->post("url") && $request->post("frequency") && $request->post("repeat_count"))
+
+        if($request->post('formData'))
         {
+            $url = htmlspecialchars($request->post('formData')[1]["value"]);
             if($request->isAjax)
             {
-                $url = $request->post("url");
-
-
-
-
-
-                /*$client = new Client([
+                $client = new Client([
                     'transport' => 'yii\httpclient\CurlTransport'
                 ]);
 
                 $response = $client->createRequest()
-                    ->setMethod('POST')
-                    ->setUrl('http://domain.com/api/1.0/users')
-                    ->setData(['name' => 'John Doe', 'email' => 'johndoe@domain.com'])
+                    ->setUrl($url)
                     ->setOptions([
                         CURLOPT_CONNECTTIMEOUT => 10, // тайм-аут подключения
-                        CURLOPT_TIMEOUT => 10, // тайм-аут получения данных
+                        CURLOPT_HEADER => true,
+                        CURLOPT_NOBODY => true,
+                        CURLOPT_RETURNTRANSFER => true
                     ])
-                    ->send();*/
+                    ->send();
 
+                if($response)
+                {
+                    echo 'Сайт доступен';
+                }
+                else
+                {
+                    echo 'Сайт не доступен';
+                }
             }
         }
     }
