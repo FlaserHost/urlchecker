@@ -107,6 +107,7 @@ input:focus::placeholder
 .checkResult span
 {
     font-size: 13px;
+    font-family: monospace;
 }
 
 .checkResult
