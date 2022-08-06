@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    function UrlChecker(dataSet)
+    function UrlChecker(dataSet, inter)
     {
         for(i = 0; i < dataSet[3].value; i++)
         {
@@ -11,9 +11,9 @@ $(document).ready(function(){
                 success: (data) => {
                     console.log(`${data.result_url}\nHTTP код: ${data.http_status}`);
                 },
-                error: (data) => {
-                    alert(data);
-                    console.log(data);
+                error: () => {
+                    clearInterval(inter);
+                    console.log("Неизвестный URL");
                 }
             });
         }
@@ -22,8 +22,9 @@ $(document).ready(function(){
     $("#submitBtn").click(function(e){
         e.preventDefault();
         let formData = $("#urlForm").serializeArray();
+        let idInterval;
 
         UrlChecker(formData);
-        setInterval(() => { UrlChecker(formData) }, formData[2].value * 1000);
+        idInterval = setInterval(() => { UrlChecker(formData, idInterval) }, formData[2].value * 1000);
     });
 });
