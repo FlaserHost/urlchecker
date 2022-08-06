@@ -1,7 +1,5 @@
 <?php
-
 namespace app\controllers\url;
-
 use app\models\url\Checktable;
 use app\models\url\UrlForm;
 use app\models\url\Urltable;
@@ -28,6 +26,28 @@ class UrlController extends Controller
 
     public function actionCheck()
     {
+        function getId($currentUser, $currentUrl)
+        {
+            $rowData = array();
+            $urlTableCheck = UrlTable::find()->where([
+                'user_id' => $currentUser,
+                'url' => $currentUrl
+            ])->all();
+
+            foreach($urlTableCheck as $result)
+            {
+                if($result)
+                {
+                    $rowData = array(
+                        'flag' => true,
+                        'urlId' => $result->url_id
+                    );
+                }
+            }
+
+            return $rowData;
+        }
+
         $request = \Yii::$app->request;
         $session = \Yii::$app->session;
         if($request->isAjax)
@@ -37,7 +57,8 @@ class UrlController extends Controller
                 $url = htmlspecialchars($request->post('formData')[1]["value"]);
                 $frequency = htmlspecialchars($request->post('formData')[2]["value"]);
                 $repeatCount = htmlspecialchars($request->post('formData')[3]["value"]);
-                $session->set("attempt{$url}", $session->get("attempt{$url}") + 1);
+                $userId = $session->get("userId");
+                $session->set("attempt{$url}{$userId}", $session->get("attempt{$url}{$userId}") + 1);
 
                 if(!filter_var($url, FILTER_VALIDATE_URL))
                 {
@@ -60,8 +81,6 @@ class UrlController extends Controller
                     {
                         //$httpStatus = \Yii::$app->response->statusCode;
                         $httpStatus = $response->getStatusCode();
-                        $userId = $session->get("userId");
-                        $flag = 0;
 
                         $errors = array(
                             200 => 'Access Granted',
@@ -74,20 +93,7 @@ class UrlController extends Controller
                             'http_status' => $httpStatus . ' ' . $errors[$httpStatus],
                         );
 
-                        $urlTableCheck = UrlTable::find()->where([
-                            'user_id' => $userId,
-                            'url' => $url
-                        ])->all();
-
-                        foreach($urlTableCheck as $result)
-                        {
-                            if($result)
-                            {
-                                $flag++;
-                            }
-                        }
-
-                        if($flag === 0)
+                        if(getId($userId, $url)["flag"] == false)
                         {
                             $urlTable = new Urltable();
                             $urlTable->user_id = $userId;
@@ -100,10 +106,11 @@ class UrlController extends Controller
 
                         $checkTable = new Checktable();
                         $checkTable->check_date = date("Y.m.d");
+                        $checkTable->user_id = $userId;
                         $checkTable->url = $url;
-                        $checkTable->url_id = 1;
+                        $checkTable->url_id = getId($userId, $url)["urlId"];
                         $checkTable->http = $httpStatus;
-                        $checkTable->attempt = $session->get("attempt{$url}");
+                        $checkTable->attempt = $session->get("attempt{$url}{$userId}");
                         $checkTable->save();
 
                         echo json_encode($respond);

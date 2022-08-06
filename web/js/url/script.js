@@ -11,9 +11,10 @@ $(document).ready(function(){
                 success: (data) => {
                     console.log(`${data.result_url}\nHTTP код: ${data.http_status}`);
                 },
-                error: () => {
+                error: (data) => {
                     clearInterval(inter);
                     console.log("Неизвестный URL");
+                    console.log(data.responseText);
                 }
             });
         }
