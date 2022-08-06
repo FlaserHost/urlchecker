@@ -25,7 +25,7 @@ $(document).ready(function(){
 
                     $("#consoleBody").append(`
                         <div class="checkResult">
-                            <span>${data.result_url}</span>
+                            <span>URL ${data.result_url} проверен</span>
                             <span>URL: <span class="${statusColor}">${access}</span></span>
                             <span>HTTP код: <span class="${statusColor}">${data.http_status}</span></span>
                         </div>

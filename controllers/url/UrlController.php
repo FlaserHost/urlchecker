@@ -90,7 +90,7 @@ class UrlController extends Controller
                         );
 
                         $respond = array(
-                            'result_url' => "URL {$url} проверен",
+                            'result_url' => $url,
                             'http_code' => $httpStatusCode,
                             'http_status' => $httpStatusCode . ' ' . $statuses[$httpStatusCode],
                         );
