@@ -16,7 +16,6 @@
     </div>
     <?php ActiveForm::end() ?>
 </div>
-<div class="test"></div>
 <?php
     // Отключение стандартного тулбара от Yii2
     if(class_exists('yii\debug\Module'))

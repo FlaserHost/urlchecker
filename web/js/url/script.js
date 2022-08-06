@@ -1,18 +1,29 @@
 $(document).ready(function(){
+    function UrlChecker(dataSet)
+    {
+        for(i = 0; i < dataSet[3].value; i++)
+        {
+            $.ajax({
+                url: '/url/url/check',
+                type: 'POST',
+                dataType: 'JSON',
+                data: ({formData: dataSet}),
+                success: (data) => {
+                    console.log(`${data.result_url}\nHTTP код: ${data.http_status}`);
+                },
+                error: (data) => {
+                    alert(data);
+                    console.log(data);
+                }
+            });
+        }
+    }
+
     $("#submitBtn").click(function(e){
         e.preventDefault();
         let formData = $("#urlForm").serializeArray();
-console.log(formData);
-        $.ajax({
-            url: '/url/url/check',
-            type: 'POST',
-            data: ({formData: formData}),
-            success: (res) => {
-                alert(res);
-            },
-            error: (res) => {
-                alert(res);
-            }
-        });
+
+        UrlChecker(formData);
+        setInterval(() => { UrlChecker(formData) }, formData[2].value * 1000);
     });
 });

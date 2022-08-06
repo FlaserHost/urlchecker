@@ -20,33 +20,38 @@ class UrlController extends Controller
     public function actionCheck()
     {
         $request = \Yii::$app->request;
-
-        if($request->post('formData'))
+        if($request->isAjax)
         {
-            $url = htmlspecialchars($request->post('formData')[1]["value"]);
-            if($request->isAjax)
+            if($request->post('formData'))
             {
-                $client = new Client([
-                    'transport' => 'yii\httpclient\CurlTransport'
-                ]);
-
-                $response = $client->createRequest()
-                    ->setUrl($url)
-                    ->setOptions([
-                        CURLOPT_CONNECTTIMEOUT => 10, // тайм-аут подключения
-                        CURLOPT_HEADER => true,
-                        CURLOPT_NOBODY => true,
-                        CURLOPT_RETURNTRANSFER => true
-                    ])
-                    ->send();
-
-                if($response)
+                $url = htmlspecialchars($request->post('formData')[1]["value"]);
+                if(!filter_var($url, FILTER_VALIDATE_URL))
                 {
-                    echo 'Сайт доступен';
+                    return false;
                 }
                 else
                 {
-                    echo 'Сайт не доступен';
+                    $client = new Client();
+                    $response = $client->createRequest()
+                        ->setUrl($url)
+                        ->setOptions([
+                            CURLOPT_CONNECTTIMEOUT => 10,
+                            CURLOPT_HEADER => true,
+                            CURLOPT_NOBODY => true,
+                            CURLOPT_RETURNTRANSFER => true
+                        ])
+                        ->send();
+
+                    if($response)
+                    {
+                        //$httpStatus = \Yii::$app->response->statusCode;
+                        $httpStatus = $response->getStatusCode();
+                        $respond = array(
+                            'result_url' => "Сайт {$url} доступен",
+                            'http_status' => $httpStatus
+                        );
+                        echo json_encode($respond);
+                    }
                 }
             }
         }
