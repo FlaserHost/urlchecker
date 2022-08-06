@@ -11,7 +11,7 @@ class m220804_174108_add_checktable extends Migration
             'user_id' => $this->string(33),
             'url' => $this->string(255)->notNull(),
             'url_id' => $this->integer()->notNull(),
-            'http' => $this->integer()->notNull(),
+            'http_code' => $this->integer()->notNull(),
             'attempt' => $this->integer()->notNull()
         ]);
 

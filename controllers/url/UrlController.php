@@ -111,7 +111,7 @@ class UrlController extends Controller
                         $checkTable->user_id = $userId;
                         $checkTable->url = $url;
                         $checkTable->url_id = getId($userId, $url)["urlId"];
-                        $checkTable->http = $httpStatusCode;
+                        $checkTable->http_code = $httpStatusCode;
                         $checkTable->attempt = $session->get("attempt{$url}{$userId}");
                         $checkTable->save();
 
