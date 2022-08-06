@@ -37,7 +37,7 @@ class UrlController extends Controller
                 $url = htmlspecialchars($request->post('formData')[1]["value"]);
                 $frequency = htmlspecialchars($request->post('formData')[2]["value"]);
                 $repeatCount = htmlspecialchars($request->post('formData')[3]["value"]);
-                $session->set("attempt", $session->get("attempt") + 1);
+                $session->set("attempt{$url}", $session->get("attempt{$url}") + 1);
 
                 if(!filter_var($url, FILTER_VALIDATE_URL))
                 {
@@ -101,9 +101,9 @@ class UrlController extends Controller
                         $checkTable = new Checktable();
                         $checkTable->check_date = date("Y.m.d");
                         $checkTable->url = $url;
-                        $checkTable->url_id = 6;
+                        $checkTable->url_id = 1;
                         $checkTable->http = $httpStatus;
-                        $checkTable->attempt = $session->get("attempt");
+                        $checkTable->attempt = $session->get("attempt{$url}");
                         $checkTable->save();
 
                         echo json_encode($respond);
