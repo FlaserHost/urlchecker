@@ -4,7 +4,7 @@ namespace app\controllers\url;
 
 use app\models\url\Checktable;
 use app\models\url\UrlForm;
-use app\models\url\UrlTable;
+use app\models\url\Urltable;
 use yii\web\Controller;
 use yii\httpclient\Client;
 
