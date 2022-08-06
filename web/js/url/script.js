@@ -9,12 +9,39 @@ $(document).ready(function(){
                 dataType: 'JSON',
                 data: ({formData: dataSet}),
                 success: (data) => {
-                    console.log(`${data.result_url}\nHTTP код: ${data.http_status}`);
+                    let statusColor = '';
+                    let access = '';
+
+                    if(data.http_code == 200)
+                    {
+                        statusColor = 'good';
+                        access = 'доступен';
+                    }
+                    else
+                    {
+                        statusColor = 'bad';
+                        access = 'не доступен';
+                    }
+
+                    $("#consoleBody").append(`
+                        <div class="checkResult">
+                            <span>${data.result_url}</span>
+                            <span>URL: <span class="${statusColor}">${access}</span></span>
+                            <span>HTTP код: <span class="${statusColor}">${data.http_status}</span></span>
+                        </div>
+                    `);
                 },
                 error: (data) => {
                     clearInterval(inter);
-                    console.log("Неизвестный URL");
-                    console.log(data.responseText);
+                    console.log(`Неизвестный URL или иная ошибка\n${data.responseText}`);
+                    $("#consoleBody").append(`
+                        <div class="checkResult">
+                            <span class="bad">Неизвестный URL или иная ошибка</span>
+                            <pre>
+                                ${data.responseText}
+                            </pre>
+                        </div>
+                    `);
                 }
             });
         }

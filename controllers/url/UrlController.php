@@ -11,6 +11,7 @@ class UrlController extends Controller
     public function actionIndex()
     {
         $session = \Yii::$app->session;
+        //$session->remove("userId");
         session_gc();
         if(!$session->has("userId"))
         {
@@ -90,6 +91,7 @@ class UrlController extends Controller
 
                         $respond = array(
                             'result_url' => "URL {$url} проверен",
+                            'http_code' => $httpStatus,
                             'http_status' => $httpStatus . ' ' . $errors[$httpStatus],
                         );
 

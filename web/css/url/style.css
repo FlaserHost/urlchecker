@@ -1,8 +1,13 @@
+@font-face
+{
+    font-family: "English Rose";
+    src: url("../../fonts/English Rose.ttf");
+}
+
 *
 {
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
     font-family: Calibri, sans-serif;
 }
 
@@ -37,4 +42,95 @@ input, button
 input:focus::placeholder
 {
     color: transparent;
+}
+
+.centerSquare
+{
+    width: 600px;
+    display: flex;
+    height: 350px;
+    justify-content: space-between;
+}
+
+.leftSide
+{
+    display: flex;
+    align-items: center;
+}
+
+.rightSide
+{
+    margin-left: 35px;
+}
+
+.console
+{
+    width: 500px;
+    height: 100%;
+    background-color: #000;
+}
+
+.consoleTitle
+{
+    border-bottom: 1px solid #fff;
+    background-color: #000;
+    height: 25px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.consoleTitle span:last-child
+{
+    font-family: "English Rose", Calibri, sans-serif;
+    padding-top: 1px;
+}
+
+.consoleBody
+{
+    height: calc(100% - 25px);
+    overflow: auto;
+}
+
+.consoleTitle,
+.checkResult
+{
+    padding: 0 10px;
+}
+
+.consoleTitle span,
+.checkResult span
+{
+    color: #fff;
+    display: block;
+}
+
+.checkResult span
+{
+    font-size: 13px;
+}
+
+.checkResult
+{
+    margin-bottom: 10px;
+}
+
+span.good,
+span.bad
+{
+    display: inline;
+}
+
+span.good
+{
+    color: green;
+}
+
+span.bad
+{
+    color: red;
+}
+
+.checkResult pre
+{
+    color: #fff;
 }
