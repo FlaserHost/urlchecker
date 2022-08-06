@@ -7,6 +7,7 @@ class m220804_170541_add_urltable extends Migration
     {
         $this->createTable('{{%urltable}}', [
             'url_id' => $this->primaryKey(),
+            'user_id' => $this->string(33),
             'creation_date' => $this->date(),
             'url' => $this->string(255)->notNull(),
             'frequency' => $this->integer()->notNull(),

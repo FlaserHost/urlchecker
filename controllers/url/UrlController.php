@@ -3,6 +3,7 @@
 namespace app\controllers\url;
 
 use app\models\url\UrlForm;
+use app\models\url\UrlTable;
 use yii\web\Controller;
 use yii\httpclient\Client;
 
@@ -10,6 +11,13 @@ class UrlController extends Controller
 {
     public function actionIndex()
     {
+        $session = \Yii::$app->session;
+        session_gc();
+        if(!$session->has("userId"))
+        {
+            $session->set("userId", \Yii::$app->security->generateRandomString());
+        }
+
         $urlForm = new UrlForm();
         $this->layout = '/url/mainLayout';
         $this->view->title = 'Сервис проверки доступности URL-ов';
@@ -20,11 +28,15 @@ class UrlController extends Controller
     public function actionCheck()
     {
         $request = \Yii::$app->request;
+        $session = \Yii::$app->session;
         if($request->isAjax)
         {
             if($request->post('formData'))
             {
                 $url = htmlspecialchars($request->post('formData')[1]["value"]);
+                $frequency = htmlspecialchars($request->post('formData')[2]["value"]);
+                $repeatCount = htmlspecialchars($request->post('formData')[3]["value"]);
+
                 if(!filter_var($url, FILTER_VALIDATE_URL))
                 {
                     return false;
@@ -46,10 +58,43 @@ class UrlController extends Controller
                     {
                         //$httpStatus = \Yii::$app->response->statusCode;
                         $httpStatus = $response->getStatusCode();
-                        $respond = array(
-                            'result_url' => "Сайт {$url} доступен",
-                            'http_status' => $httpStatus
+                        $userId = $session->get("userId");
+                        $flag = 0;
+                        $errors = array(
+                            200 => 'Access Granted',
+                            404 => 'Page Not Found',
+                            502 => 'Bad Gateway'
                         );
+
+                        $respond = array(
+                            'result_url' => "URL {$url} проверен",
+                            'http_status' => $httpStatus . ' ' . $errors[$httpStatus],
+                        );
+
+                        $urlTableCheck = UrlTable::find()->where([
+                            'user_id' => $userId,
+                            'url' => $url
+                        ])->all();
+
+                        foreach($urlTableCheck as $result)
+                        {
+                            if($result)
+                            {
+                                $flag++;
+                            }
+                        }
+
+                        if($flag === 0)
+                        {
+                            $urlTable = new UrlTable();
+                            $urlTable->user_id = $userId;
+                            $urlTable->creation_date = date("Y.m.d");
+                            $urlTable->url = $url;
+                            $urlTable->frequency = $frequency;
+                            $urlTable->repeat_count = $repeatCount;
+                            $urlTable->save();
+                        }
+
                         echo json_encode($respond);
                     }
                 }
