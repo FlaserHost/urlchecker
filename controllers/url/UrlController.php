@@ -81,9 +81,9 @@ class UrlController extends Controller
                     if($response)
                     {
                         //$httpStatus = \Yii::$app->response->statusCode;
-                        $httpStatus = $response->getStatusCode();
+                        $httpStatusCode = $response->getStatusCode();
 
-                        $errors = array(
+                        $statuses = array(
                             200 => 'Access Granted',
                             404 => 'Page Not Found',
                             502 => 'Bad Gateway'
@@ -91,8 +91,8 @@ class UrlController extends Controller
 
                         $respond = array(
                             'result_url' => "URL {$url} проверен",
-                            'http_code' => $httpStatus,
-                            'http_status' => $httpStatus . ' ' . $errors[$httpStatus],
+                            'http_code' => $httpStatusCode,
+                            'http_status' => $httpStatusCode . ' ' . $statuses[$httpStatusCode],
                         );
 
                         if(getId($userId, $url)["flag"] == false)
@@ -111,7 +111,7 @@ class UrlController extends Controller
                         $checkTable->user_id = $userId;
                         $checkTable->url = $url;
                         $checkTable->url_id = getId($userId, $url)["urlId"];
-                        $checkTable->http = $httpStatus;
+                        $checkTable->http = $httpStatusCode;
                         $checkTable->attempt = $session->get("attempt{$url}{$userId}");
                         $checkTable->save();
 
