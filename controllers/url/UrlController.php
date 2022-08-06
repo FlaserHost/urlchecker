@@ -2,6 +2,7 @@
 
 namespace app\controllers\url;
 
+use app\models\url\Checktable;
 use app\models\url\UrlForm;
 use app\models\url\UrlTable;
 use yii\web\Controller;
@@ -36,6 +37,7 @@ class UrlController extends Controller
                 $url = htmlspecialchars($request->post('formData')[1]["value"]);
                 $frequency = htmlspecialchars($request->post('formData')[2]["value"]);
                 $repeatCount = htmlspecialchars($request->post('formData')[3]["value"]);
+                $session->set("attempt", $session->get("attempt") + 1);
 
                 if(!filter_var($url, FILTER_VALIDATE_URL))
                 {
@@ -60,6 +62,7 @@ class UrlController extends Controller
                         $httpStatus = $response->getStatusCode();
                         $userId = $session->get("userId");
                         $flag = 0;
+
                         $errors = array(
                             200 => 'Access Granted',
                             404 => 'Page Not Found',
@@ -86,7 +89,7 @@ class UrlController extends Controller
 
                         if($flag === 0)
                         {
-                            $urlTable = new UrlTable();
+                            $urlTable = new Urltable();
                             $urlTable->user_id = $userId;
                             $urlTable->creation_date = date("Y.m.d");
                             $urlTable->url = $url;
@@ -94,6 +97,14 @@ class UrlController extends Controller
                             $urlTable->repeat_count = $repeatCount;
                             $urlTable->save();
                         }
+
+                        $checkTable = new Checktable();
+                        $checkTable->check_date = date("Y.m.d");
+                        $checkTable->url = $url;
+                        $checkTable->url_id = 6;
+                        $checkTable->http = $httpStatus;
+                        $checkTable->attempt = $session->get("attempt");
+                        $checkTable->save();
 
                         echo json_encode($respond);
                     }
