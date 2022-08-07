@@ -124,6 +124,12 @@ input:focus::placeholder
     margin-bottom: 10px;
 }
 
+.checkResult pre *
+{
+    display: block;
+    max-width: 100%;
+}
+
 span.good,
 span.bad
 {

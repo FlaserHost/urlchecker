@@ -32,6 +32,7 @@ $(document).ready(function(){
                     `);
                 },
                 error: (data) => {
+                    console.log(inter);
                     clearInterval(inter);
                     console.log(`Неизвестный URL или иная ошибка\n${data.responseText}`);
                     $("#contentCorrector").append(`
@@ -52,8 +53,8 @@ $(document).ready(function(){
         let formData = $("#urlForm").serializeArray();
         let idInterval;
 
-        UrlChecker(formData);
         idInterval = setInterval(() => { UrlChecker(formData, idInterval) }, formData[2].value * 60000);
+        UrlChecker(formData, idInterval);
     });
 
     $("#goToAdmin").click(function(){
