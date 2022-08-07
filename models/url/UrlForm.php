@@ -14,8 +14,8 @@ class UrlForm extends Model
     {
         return [
             'url' => 'URL',
-            'frequency' => 'Частота (сек)',
-            'repeat_count' => 'Повторы в сек.'
+            'frequency' => 'Частота (мин)',
+            'repeat_count' => 'Повторы в мин.'
         ];
     }
 }

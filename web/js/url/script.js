@@ -53,6 +53,6 @@ $(document).ready(function(){
         let idInterval;
 
         UrlChecker(formData);
-        idInterval = setInterval(() => { UrlChecker(formData, idInterval) }, formData[2].value * 1000);
+        idInterval = setInterval(() => { UrlChecker(formData, idInterval) }, formData[2].value * 60000);
     });
 });
