@@ -23,7 +23,7 @@ $(document).ready(function(){
                         access = 'не доступен';
                     }
 
-                    $("#consoleBody").append(`
+                    $("#contentCorrector").append(`
                         <div class="checkResult">
                             <span>URL ${data.result_url} проверен</span>
                             <span>URL: <span class="${statusColor}">${access}</span></span>
@@ -34,7 +34,7 @@ $(document).ready(function(){
                 error: (data) => {
                     clearInterval(inter);
                     console.log(`Неизвестный URL или иная ошибка\n${data.responseText}`);
-                    $("#consoleBody").append(`
+                    $("#contentCorrector").append(`
                         <div class="checkResult">
                             <span class="bad">Неизвестный URL или иная ошибка</span>
                             <pre>

@@ -25,7 +25,9 @@
                     <span>Console</span>
                     <span>UrlChecker</span>
                 </div>
-                <div id="consoleBody" class="consoleBody"></div>
+                <div id="consoleBody" class="consoleBody">
+                    <div class="contentCorrector" id="contentCorrector"></div>
+                </div>
             </div>
         </div>
     </div>

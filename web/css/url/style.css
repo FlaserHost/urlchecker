@@ -89,7 +89,15 @@ input:focus::placeholder
 .consoleBody
 {
     height: calc(100% - 25px);
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.contentCorrector
+{
+    flex-grow: 1;
 }
 
 .consoleTitle,
