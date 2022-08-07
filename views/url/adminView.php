@@ -10,9 +10,7 @@
         <button class="goToClient" id="goToClient">Перейти на клиентскую часть</button>
     </div>
     <div class="contentBody">
-        <div class="tableArea" id="tableArea">
-
-        </div>
+        <div class="tableArea" id="tableArea"></div>
     </div>
 </div>
 <?php
