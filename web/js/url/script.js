@@ -55,4 +55,8 @@ $(document).ready(function(){
         UrlChecker(formData);
         idInterval = setInterval(() => { UrlChecker(formData, idInterval) }, formData[2].value * 60000);
     });
+
+    $("#goToAdmin").click(function(){
+        location.href = "/url/admin/index";
+    });
 });

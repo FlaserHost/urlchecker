@@ -26,6 +26,9 @@ html, body, .content
     position: fixed;
     left: 0;
     top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .btnBlock div
@@ -94,4 +97,15 @@ table tr:nth-child(odd)
 table tr:first-child
 {
     background-color: lightblue;
+}
+
+.goToClient
+{
+    border: none;
+    outline: none;
+    background-color: lightgreen;
+    padding: 20px 10px;
+    border-top: 1px solid #000;
+    font-size: 14px;
+    cursor: pointer;
 }

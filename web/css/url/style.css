@@ -136,3 +136,16 @@ span.bad
 {
     color: #fff;
 }
+
+.goToAdmin
+{
+    position: absolute;
+    top: 0;
+    right: 0;
+    outline: none;
+    background-color: lightgreen;
+    padding: 5px 10px;
+    border: none;
+    border-left: 1px solid #000;
+    border-bottom: 1px solid #000;
+}

@@ -18,4 +18,8 @@ $(document).ready(function(){
             }
         });
     });
+
+    $("#goToClient").click(function(){
+        location.href = "/url/url/index";
+    });
 });

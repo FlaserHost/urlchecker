@@ -7,6 +7,7 @@
             <div class="btn" data-path="show-added-url">Добавленные URL</div>
             <div class="btn" data-path="show-checking-url">Проверки URL</div>
         </div>
+        <button class="goToClient" id="goToClient">Перейти на клиентскую часть</button>
     </div>
     <div class="contentBody">
         <div class="tableArea" id="tableArea">
