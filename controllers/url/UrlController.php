@@ -11,7 +11,7 @@ class UrlController extends Controller
     public function actionIndex()
     {
         $session = \Yii::$app->session;
-        $session->remove("userId");
+        //$session->remove("userId");
         session_gc();
         if(!$session->has("userId"))
         {
