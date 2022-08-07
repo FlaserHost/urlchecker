@@ -32,7 +32,6 @@ $(document).ready(function(){
                     `);
                 },
                 error: (data) => {
-                    console.log(inter);
                     clearInterval(inter);
                     console.log(`Неизвестный URL или иная ошибка\n${data.responseText}`);
                     $("#contentCorrector").append(`
