@@ -92,7 +92,7 @@ class UrlController extends Controller
                         $respond = array(
                             'result_url' => $url,
                             'http_code' => $httpStatusCode,
-                            'http_status' => $httpStatusCode . ' ' . $statuses[$httpStatusCode],
+                            'http_status' => $httpStatusCode . ' ' . $statuses[$httpStatusCode]
                         );
 
                         if(getId($userId, $url)["flag"] == false)
